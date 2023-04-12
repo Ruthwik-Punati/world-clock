@@ -1,0 +1,249 @@
+* {
+  /* border: 1px solid red; */
+  margin: 0;
+  padding: 0;
+  /* box-sizing: border-box; */
+}
+
+.body {
+  height: 100vh;
+}
+
+.select {
+  text-align: center;
+  border-radius: 5px;
+  background-color: rgb(134, 145, 145);
+  border: none;
+  display: block;
+  margin: 80px auto 0 auto;
+  width: 130px;
+  height: 40px;
+
+  font-size: 15px;
+  font-weight: bold;
+  color: white;
+}
+
+.option {
+  color: rgba(180, 152, 153, 0.893);
+  border: none;
+  background-color: white;
+  font-size: small;
+  font-weight: bold;
+}
+.clock {
+  position: absolute;
+  display: block;
+
+  top: 50%;
+  right: 50%;
+  transform: translateX(50%) translateY(-50%);
+
+  width: 200px;
+  height: 200px;
+  border: 12px solid rgb(208, 172, 229);
+  border-radius: 50%;
+  /* box-shadow: 2px 2px 0 0 7px rgb(35, 31, 31); */
+
+  /* overflow: hidden; */
+}
+
+.clock span {
+  height: 16px;
+  width: 16px;
+  line-height: 16px;
+  text-align: center;
+  font-weight: bold;
+  font-size: large;
+}
+
+.__1 {
+  position: absolute;
+  top: 13.4px;
+  right: 25%;
+  transform: translate(25%, 25%);
+}
+
+.__2 {
+  position: absolute;
+  right: 13.4px;
+  top: 25%;
+  transform: translate(-25%, 0);
+}
+.__3 {
+  position: absolute;
+  right: 3px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.__4 {
+  position: absolute;
+  right: 13.4px;
+  bottom: 25%;
+  transform: translate(-25%, 0);
+}
+
+.__5 {
+  position: absolute;
+  bottom: 13.4px;
+  right: 25%;
+  transform: translate(25%, -25%);
+}
+
+.__6 {
+  position: absolute;
+  bottom: 3px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.__7 {
+  position: absolute;
+  bottom: 13.4px;
+  left: 25%;
+  transform: translate(-25%, -25%);
+}
+
+.__8 {
+  position: absolute;
+  left: 13.4px;
+  bottom: 25%;
+  transform: translate(25%, 0);
+}
+
+.__9 {
+  position: absolute;
+  left: 3px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.__10 {
+  position: absolute;
+  left: 13.4px;
+  top: 25%;
+  transform: translate(25%, 0);
+}
+
+.__11 {
+  position: absolute;
+  top: 13.4px;
+  left: 25%;
+  transform: translate(-25%, 25%);
+}
+
+.__12 {
+  position: absolute;
+  top: 3px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.center {
+  position: absolute;
+  background-color: rgb(19, 9, 9);
+
+  bottom: 50%;
+  left: 50%;
+
+  height: 10px;
+  width: 10px;
+  border-radius: 50%;
+  transform: translate(-50%, 50%);
+}
+
+.wrapper {
+  height: 150px;
+  width: 150px;
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.sec {
+  position: absolute;
+  background-color: rgb(92, 62, 62);
+  width: 1.2px;
+
+  height: 70px;
+  left: 49.7%;
+  top: 4px;
+
+  transform-origin: bottom;
+  transform: rotateZ(0deg);
+}
+
+.min {
+  position: absolute;
+  background-color: rgb(94, 80, 80);
+  width: 3px;
+
+  height: 70px;
+  left: 49.4%;
+  top: 3%;
+  transform-origin: bottom;
+  transform: rotateZ(0deg);
+}
+
+.hrs {
+  position: absolute;
+  background-color: rgb(209, 72, 72);
+  width: 5px;
+
+  height: 45px;
+  left: 48.6%;
+  top: 20%;
+
+  transform-origin: bottom;
+  border-radius: 10px;
+  transform: rotateZ(0deg);
+}
+
+.brand {
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: small;
+  text-align: center;
+  font-weight: bold;
+}
+
+.brand span {
+  font-size: xx-small;
+  font-weight: lighter;
+}
+
+.AM__PM {
+  position: absolute;
+  bottom: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: x-small;
+  text-align: center;
+}
+
+.numeric_time {
+  position: absolute;
+  background-color: rgb(134, 145, 145);
+  color: white;
+  width: 130px;
+  padding: 5px;
+
+  text-align: center;
+  font-size: 17px;
+  font-weight: bold;
+  display: block;
+
+  top: 75%;
+  right: 50%;
+  transform: translateX(50%) translateY(-50%);
+
+  border-radius: 5px;
+
+  border: none;
+}

@@ -115,6 +115,13 @@ const timeZonesArray = [
 let timeZone = timeZonesArray[0]
 
 clock.addEventListener('click', function () {
+  new Notification('Melvault Clock', {
+    body: 'hello!',
+
+    icon: 'icon.png',
+    tag: 'time',
+  })
+
   timeZone =
     timeZonesArray[
       timeZonesArray.indexOf(timeZone) === timeZonesArray.length - 1

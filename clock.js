@@ -12,6 +12,15 @@ let notification
 
 let nmin
 
+// navigator.serviceWorker.register('sw.js')
+Notification.requestPermission(function (result) {
+  if (result === 'granted') {
+    navigator.serviceWorker.ready.then(function (registration) {
+      registration.showNotification('Notification with ServiceWorker')
+    })
+  }
+})
+
 select.addEventListener('change', function () {
   if (this.value === 'India') {
     timeZone = indianTime
@@ -116,10 +125,10 @@ let timeZone = timeZonesArray[0]
 
 clock.addEventListener('click', function () {
   new Notification('Melvault Clock', {
-    body: 'hello!',
+    body: 'Hello!',
 
     icon: 'icon.png',
-    tag: 'time',
+    // tag: 'time',
   })
 
   timeZone =
@@ -194,15 +203,15 @@ function worldClock() {
 
   console.log(sec, min)
 
-  res === 'granted' &&
-    nmin !== min &&
-    (notification = new Notification('Melvault Clock', {
-      body: text,
+  // res === 'granted' &&
+  //   nmin !== min &&
+  //   (notification = new Notification('Melvault Clock', {
+  //     body: text,
 
-      icon: 'icon.png',
-      tag: 'time',
-    })) &&
-    (nmin = min)
+  //     icon: 'icon.png',
+  //     tag: 'time',
+  //   })) &&
+  //   (nmin = min)
 }
 
 setInterval(function () {

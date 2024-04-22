@@ -7,25 +7,28 @@ const select = document.querySelector('.select')
 const numericTime = document.querySelector('.numeric_time')
 
 select.addEventListener('change', function () {
-  if (this.value === 'India Time') {
+  if (this.value === 'India') {
     timeZone = indianTime
   }
-  if (this.value === 'NewYork Time') {
+  if (this.value === 'Sweden') {
     timeZone = newYorkTime
   }
-  if (this.value === 'London Time') {
+  if (this.value === 'NewYork') {
+    timeZone = newYorkTime
+  }
+  if (this.value === 'London') {
     timeZone = londonTime
   }
-  if (this.value === 'Australia Time') {
+  if (this.value === 'Australia') {
     timeZone = australiaTime
   }
-  if (this.value === 'Germany Time') {
+  if (this.value === 'Germany') {
     timeZone = germanyTime
   }
-  if (this.value === 'Saudi Time') {
+  if (this.value === 'Saudi') {
     timeZone = saudiTime
   }
-  if (this.value === 'Dubai Time') {
+  if (this.value === 'Dubai') {
     timeZone = dubaiTime
   }
   worldClock()
@@ -114,28 +117,32 @@ clock.addEventListener('click', function () {
     ]
 
   if (timeZone === newYorkTime) {
-    select.value = 'NewYork Time'
+    select.value = 'NewYork'
+  }
+
+  if (timeZone === swedenTime) {
+    select.value = 'Sweden'
   }
 
   if (timeZone === indianTime) {
-    select.value = 'India Time'
+    select.value = 'India'
   }
 
   if (timeZone === londonTime) {
-    select.value = 'London Time'
+    select.value = 'London'
   }
 
   if (timeZone === australiaTime) {
-    select.value = 'Australia Time'
+    select.value = 'Australia'
   }
   if (timeZone === germanyTime) {
-    select.value = 'Germany Time'
+    select.value = 'Germany'
   }
   if (timeZone === saudiTime) {
-    select.value = 'Saudi Time'
+    select.value = 'Saudi'
   }
   if (timeZone === dubaiTime) {
-    select.value = 'Dubai Time'
+    select.value = 'Dubai'
   }
 
   worldClock()

@@ -6,12 +6,18 @@ const AM__PM = document.querySelector('.AM__PM')
 const select = document.querySelector('.select')
 const numericTime = document.querySelector('.numeric_time')
 
+const res = await Notification.requestPermission()
+
+let notification
+
+let nmin
+
 select.addEventListener('change', function () {
   if (this.value === 'India') {
     timeZone = indianTime
   }
   if (this.value === 'Sweden') {
-    timeZone = newYorkTime
+    timeZone = swedenTime
   }
   if (this.value === 'NewYork') {
     timeZone = newYorkTime
@@ -155,11 +161,13 @@ function worldClock() {
   const min = timeZone().getMinutes()
   const hrs = timeZone().getHours()
 
-  numericTime.innerHTML = `${
+  const digitalTime = `${
     hrs > 12 ? `${hrs - 12}`.padStart(2, '0') : `${hrs}`.padStart(2, '0')
   } : ${`${min}`.padStart(2, '0')}  &nbsp  ${`${
     hrs <= 12 ? 'AM' : 'PM'
   }`.padStart(4, ' ')}`
+
+  numericTime.innerHTML = digitalTime
 
   // if (hrs <= 12) {
   //   AM__PM.textContent = "AM";
@@ -172,8 +180,28 @@ function worldClock() {
   minHand.style.transform = `rotate(${min * 6}deg)`
 
   hrsHand.style.transform = `rotate(${hrs * 30 + min / 2}deg)`
+
+  const text = `${select.value} time is  ${digitalTime
+    .replace('&nbsp', '')
+    .replace('    ', '')}`
+
+  console.log(sec, min)
+
+  res === 'granted' &&
+    nmin !== min &&
+    (notification = new Notification('Melvault Clock', {
+      body: text,
+
+      icon: 'icon.png',
+      tag: 'time',
+    })) &&
+    (nmin = min)
 }
 
 setInterval(function () {
   worldClock()
 }, 1000)
+
+window.addEventListener('beforeunload', function (e) {
+  notification?.close()
+})

@@ -6,20 +6,23 @@ const AM__PM = document.querySelector('.AM__PM')
 const select = document.querySelector('.select')
 const numericTime = document.querySelector('.numeric_time')
 
-const res = await Notification.requestPermission()
+// for notifications
+let res
+
+let reg
 
 let notification
 
-let nmin
+let notificationsNotPreffered = false
 
-// navigator.serviceWorker.register('sw.js')
-Notification.requestPermission(function (result) {
-  if (result === 'granted') {
-    navigator.serviceWorker.ready.then(function (registration) {
-      registration.showNotification('Notification with ServiceWorker')
-    })
-  }
-})
+let nmin = 0
+
+const registerSW = async () => {
+  const registration = await navigator.serviceWorker.register('sw.js')
+  return registration
+}
+
+// /////////////////////
 
 select.addEventListener('change', function () {
   if (this.value === 'India') {
@@ -124,13 +127,6 @@ const timeZonesArray = [
 let timeZone = timeZonesArray[0]
 
 clock.addEventListener('click', function () {
-  new Notification('Melvault Clock', {
-    body: 'Hello!',
-
-    icon: 'icon.png',
-    // tag: 'time',
-  })
-
   timeZone =
     timeZonesArray[
       timeZonesArray.indexOf(timeZone) === timeZonesArray.length - 1
@@ -172,24 +168,29 @@ clock.addEventListener('click', function () {
 
 worldClock()
 
-function worldClock() {
+async function worldClock() {
   const sec = timeZone().getSeconds()
   const min = timeZone().getMinutes()
   const hrs = timeZone().getHours()
 
+  function covertHours() {
+    if (hrs == 0) {
+      return `${12}`
+    } else if (hrs > 12) {
+      return `${hrs - 12}`.padStart(2, '0')
+    } else if (hrs <= 12) {
+      return `${hrs}`.padStart(2, '0')
+    }
+  }
+
   const digitalTime = `${
-    hrs > 12 ? `${hrs - 12}`.padStart(2, '0') : `${hrs}`.padStart(2, '0')
+    covertHours()
+    // hrs > 12 ? `${hrs - 12}`.padStart(2, '0') : `${hrs}`.padStart(2, '0')
   } : ${`${min}`.padStart(2, '0')}  &nbsp  ${`${
-    hrs <= 12 ? 'AM' : 'PM'
+    hrs < 12 ? 'AM' : 'PM'
   }`.padStart(4, ' ')}`
 
   numericTime.innerHTML = digitalTime
-
-  // if (hrs <= 12) {
-  //   AM__PM.textContent = "AM";
-  // } else {
-  //   AM__PM.textContent = "PM";
-  // }
 
   secHand.style.transform = `rotate(${sec * 6}deg)`
 
@@ -201,23 +202,56 @@ function worldClock() {
     .replace('&nbsp', '')
     .replace('    ', '')}`
 
-  console.log(sec, min)
+  // notifications part
 
-  // res === 'granted' &&
-  //   nmin !== min &&
-  //   (notification = new Notification('Melvault Clock', {
-  //     body: text,
+  res || (res = await Notification.requestPermission())
 
-  //     icon: 'icon.png',
-  //     tag: 'time',
-  //   })) &&
-  //   (nmin = min)
+  res &&
+    res !== 'granted' &&
+    notification?.close() &&
+    (notification = undefined)
+
+  res === 'granted' && !reg && (reg = await registerSW())
+
+  if (reg && !notificationsNotPreffered && nmin < min) {
+    notification = await reg?.showNotification('Melvault Clock', {
+      body: text,
+      icon: 'icon.png',
+      tag: 'time',
+    })
+
+    nmin = min
+  }
+
+  reg &&
+    reg?.getNotifications().then(function (notifications) {
+      notifications.forEach((notification) =>
+        notification.addEventListener('close', async function () {
+          await reg.unregister()
+          console.log('cancelled')
+          notificationsNotPreffered = true
+          reg?.getNotifications().then(function (notifications) {
+            notifications.forEach((notification) => notification.close())
+
+            console.log(notifications)
+          })
+        })
+      )
+    })
+
+  // //////////////////////////////
 }
 
 setInterval(function () {
   worldClock()
 }, 1000)
 
-window.addEventListener('beforeunload', function (e) {
-  notification?.close()
+window.addEventListener('beforeunload', async function (event) {
+  event.preventDefault()
+  await reg?.getNotifications().then(function (notifications) {
+    console.log(notifications)
+    notifications.forEach((notification) => notification.close())
+  })
 })
+
+//////////////////////////////////////////////////////////

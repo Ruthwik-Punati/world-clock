@@ -98,12 +98,12 @@ const dubaiTime = function () {
 const timeZonesArray = [
   indianTime,
   swedenTime,
-  newYorkTime,
-  londonTime,
-  australiaTime,
-  germanyTime,
-  saudiTime,
-  dubaiTime,
+  // newYorkTime,
+  // londonTime,
+  // australiaTime,
+  // germanyTime,
+  // saudiTime,
+  // dubaiTime,
 ]
 
 let timeZone = timeZonesArray[0]

@@ -55,6 +55,7 @@
   text-align: center;
   font-weight: bold;
   font-size: large;
+  color: #333;
 }
 
 .__1 {
@@ -211,6 +212,9 @@
   font-size: small;
   text-align: center;
   font-weight: bold;
+  font-family: system-ui;
+  color: #444;
+  letter-spacing: 0.9px;
 }
 
 .brand span {

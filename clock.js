@@ -13,7 +13,7 @@ let reg
 
 let notification
 
-let notificationsNotPreffered = false
+export let notificationsNotPreffered = false
 
 let nmin = 0
 
@@ -206,15 +206,10 @@ async function worldClock() {
 
   res || (res = await Notification.requestPermission())
 
-  res &&
-    res !== 'granted' &&
-    notification?.close() &&
-    (notification = undefined)
-
   res === 'granted' && !reg && (reg = await registerSW())
 
-  if (reg && !notificationsNotPreffered && nmin < min) {
-    notification = await reg?.showNotification('Melvault Clock', {
+  if (reg && !notificationsNotPreffered && nmin !== min) {
+    notification = reg?.showNotification('Melvault Clock', {
       body: text,
       icon: 'icon.png',
       tag: 'time',
@@ -223,21 +218,21 @@ async function worldClock() {
     nmin = min
   }
 
-  reg &&
-    reg?.getNotifications().then(function (notifications) {
-      notifications.forEach((notification) =>
-        notification.addEventListener('close', async function () {
-          await reg.unregister()
-          console.log('cancelled')
-          notificationsNotPreffered = true
-          reg?.getNotifications().then(function (notifications) {
-            notifications.forEach((notification) => notification.close())
-
-            console.log(notifications)
-          })
-        })
-      )
-    })
+  // reg &&
+  //   reg.getNotifications().then(function (notifications) {
+  //     notifications.forEach((notification) => {
+  //       notification.onClose = function (e) {
+  //         e.preventDefault()
+  //         Notification.permission = 'denied'
+  //         reg = false
+  //         console.log('cancelled')
+  //         notificationsNotPreffered = true
+  // reg?.getNotifications().then(function (notifications) {
+  //   notifications.forEach((notification) => notification.close())
+  // })
+  //     }
+  //   })
+  // })
 
   // //////////////////////////////
 }
@@ -246,9 +241,10 @@ setInterval(function () {
   worldClock()
 }, 1000)
 
-window.addEventListener('beforeunload', async function (event) {
-  event.preventDefault()
-  await reg?.getNotifications().then(function (notifications) {
+window.addEventListener('beforeunload', function (e) {
+  e.preventDefault()
+
+  reg?.getNotifications().then(function (notifications) {
     console.log(notifications)
     notifications.forEach((notification) => notification.close())
   })
